@@ -8,7 +8,7 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 
-var model = require("./models/ResponseModel");
+var model = require("./Models/ResponseModel");
 
 var userRouter = require("./routes/user");
 var taskRouter = require("./routes/task");
@@ -92,18 +92,11 @@ app.post("/logout", function (req, res) {
   res.json(model);
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-  })
-}
-
-// app.all("*", function (req, res, next) {
-//   if (!req.session.User) {
-//     res.status(401).send();
-//   } else next();
-// });
+app.all("*", function (req, res, next) {
+  if (!req.session.User) {
+    res.status(401).send();
+  } else next();
+});
 
 app.use("/users", userRouter);
 app.use("/tasks", taskRouter);
