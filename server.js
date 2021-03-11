@@ -92,6 +92,13 @@ app.post("/logout", function (req, res) {
   res.json(model);
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+  })
+}
+
 app.all("*", function (req, res, next) {
   if (!req.session.User) {
     res.status(401).send();
@@ -129,6 +136,7 @@ app.use(function (err, req, res, next) {
     },
   });
 });
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, (req, res) => {
   console.log(`server listening on port: ${PORT}`);
