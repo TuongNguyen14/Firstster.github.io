@@ -99,11 +99,11 @@ if (process.env.NODE_ENV === "production") {
   })
 }
 
-app.all("*", function (req, res, next) {
-  if (!req.session.User) {
-    res.status(401).send();
-  } else next();
-});
+// app.all("*", function (req, res, next) {
+//   if (!req.session.User) {
+//     res.status(401).send();
+//   } else next();
+// });
 
 app.use("/users", userRouter);
 app.use("/tasks", taskRouter);
