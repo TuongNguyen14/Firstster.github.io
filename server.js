@@ -8,9 +8,6 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 
-const { Response } = require("./Models/ResponseModel");
-let model = new Response();
-
 var userRouter = require("./routes/user");
 var taskRouter = require("./routes/task");
 var projectRouter = require("./routes/project");
@@ -57,10 +54,14 @@ app.post("/authenticate", function (req, res) {
           if (err) res.status(500).send();
         }
       );
-      model.type = 1;
-      model.message = "Successed logging in";
-      model.data = User;
-      res.json(model);
+      // var model;
+      // model.type = 1;
+      // model.message = "Successed logging in";
+      // model.data = User;
+      res.send({
+        type: 1, message: "Successed logging in",
+        data: User,
+      });
     } else {
       const { username, password } = req.body;
       usercontroller.GetUserByUsernamePassword(username, password, (data) => {
@@ -86,11 +87,13 @@ app.post("/authenticate", function (req, res) {
 
 app.post("/logout", function (req, res) {
   req.session.destroy();
-  model.type = 1;
-  model.message = "LOGGEDOUT";
-  model.data = null;
+  // model.type = 1;
+  // model.message = "LOGGEDOUT";
+  // model.data = null;
   //res.clearCookie("key");
-  res.json(model);
+  res.status(200).send({
+    type: 1, message: "LOGGEDOUT", data: undefined
+  });
 });
 
 app.all("*", function (req, res, next) {
