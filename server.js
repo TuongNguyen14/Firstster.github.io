@@ -8,7 +8,7 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 
-const Response = require("./Models/ResponseModel");
+const { Response } = require("./Models/ResponseModel");
 let model = new Response();
 
 var userRouter = require("./routes/user");

@@ -6,4 +6,4 @@ class Response {
     }
 }
 
-module.exports = Response
+exports.Response = Response
