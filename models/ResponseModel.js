@@ -6,4 +6,4 @@ class Response {
     }
 }
 
-module.exports.Response = new Response()
+module.exports = Response
