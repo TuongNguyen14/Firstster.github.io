@@ -23,7 +23,16 @@ store.on("error", function (error) {
   console.log(error);
 });
 var router = express.Router();
-app.use(cors());
+
+const allowed = process.env.CORSwhitelist.split(',');
+
+var corsOptions = {
+  origin: process.env.CORSwhitelist,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions));
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
